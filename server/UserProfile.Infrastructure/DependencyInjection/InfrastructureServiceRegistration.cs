@@ -11,6 +11,8 @@ public static class InfrastructureServiceRegistration
     {
         services.AddScoped<IUserProfileRepository, UserProfileRepository>();
         services.AddScoped<IDbConnectionFactory, DbConnectionFactory>();
+        services.AddScoped<IUserRepository, UserRepository>();
+
         // სურათების byte[]-ზე შენახვის შემთხვევაში შეიძლება დაგვჭირდება სხვაც
         return services;
     }

@@ -1,5 +1,6 @@
-using FluentValidation;
+﻿using FluentValidation;
 using FluentValidation.AspNetCore;
+using Carter;
 using MediatR;
 using UserProfile.Application.Features.UserProfiles.Commands;
 using UserProfile.Application.Features.UserProfiles.Validators;
@@ -19,6 +20,11 @@ builder.Services.AddCors(options =>
               .AllowAnyHeader());
 });
 
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(80); 
+});
+
 // Swagger (optional but helpful for testing)
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -34,7 +40,10 @@ builder.Services.AddValidatorsFromAssembly(typeof(CreateUserProfileValidator).As
 // HttpContext accessor
 builder.Services.AddHttpContextAccessor();
 
-// Controllers (optional � if you use classic controllers too)
+builder.Services.AddCarter();
+
+
+// Controllers (optional — if you use classic controllers too)
 builder.Services.AddControllers();
 builder.Services.AddInfrastructure(builder.Configuration);
 
@@ -42,7 +51,7 @@ builder.Services.AddInfrastructure(builder.Configuration);
 // builder.Services.AddScoped<IUserProfileRepository, UserProfileRepository>();
 // builder.Services.AddScoped<IImageStorageService, LocalFileImageStorage>();
 
-// Static file support � for serving profile pictures if using wwwroot/images
+// Static file support — for serving profile pictures if using wwwroot/images
 builder.Services.AddDirectoryBrowser(); // optional for debugging
 
 // ---------------------- Build App ----------------------
@@ -72,6 +81,7 @@ app.UseHttpsRedirection();
 app.MapControllers();
 
 // Load endpoints from extension method
-app.MapUserProfileEndpoints(); // our Minimal APIs in a clean way
+app.MapUserProfileEndpoints(); // თუ ჯერ არ გაქვს Carter-ზე ეს
+app.MapCarter(); // ✅ საჭირო Carter ენდპოინტებისთვის
 
 app.Run();
