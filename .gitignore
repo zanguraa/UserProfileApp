@@ -1,0 +1,23 @@
+# Node modules
+client/node_modules/
+client/build/
+client/.env
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# .NET
+**/bin/
+**/obj/
+
+# Logs
+*.log
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Docker artifacts
+*.tar
